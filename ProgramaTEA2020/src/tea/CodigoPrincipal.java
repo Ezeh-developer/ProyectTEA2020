@@ -3,42 +3,116 @@ package tea;
 import java.util.Scanner;
 
 public class CodigoPrincipal {
-	public static void Main(String[] args) {
-
+	public static void main(String[] args) {
+		
+		System.out.println("Hola");
+		
 		Scanner input = new Scanner(System.in);
 
 		// Definicion de variables
-		double latitude;
-		double longitude;
-		double JD;
-		int TimeZone;
-		int Day;
-		int Month;
-		int Year;
-		int UTCHour;
-		int UTCMinute;
+		int Option = 0;
+		// Valores introducidos por el usuario
+		double Latitude = 0;
+		double Longitude = 0;
+		int Timezone = 0;
+		int Day = 0;
+		int Month = 0;
+		int Year = 0;
+		int UTCHour = 0;
+		int UTCMinute = 0;
+		// Valores calculados por metodos
+		double JD = 0;
+		double JC = 0;
+		double GeomMeanLongSun = 0;
+		double GeomMeanAnomSun = 0;
+		double EccentEarthOrbit = 0;
+		double SunEqOfCtr = 0;
+		double SunTrueLong = 0;
+		double SunTrueAnom = 0;
+		double SunRadVector = 0;
+		double SunAppLong = 0;
+		double MeanObliqEcliptic = 0;
+		double ObliqCorr = 0;
+		double SunRtAscen = 0;
+		double SunDeclin = 0;
+		double VarY = 0;
+		double EqOfTime = 0;
+		double HASunrise = 0;
+		double SolarNoon = 0;
+		double SunriseTime = 0;
+		double SunsetTime = 0;
+		double SunlightDuration = 0;
+		double TrueSolarTime = 0;
+		double HourAngle = 0;
+		double SolarZenithAngle = 0;
+		double SolarElevationAngle = 0;
+		double ApproxAtmosphericRefraction = 0;
+		double SolarElevationCOrrectedForAtmRefraction = 0;
+		double SolarAzimuthAngle = 0;
+		
+		System.out.println("Calculadora de posicion solar");
+		System.out.println("1) Ingresar datos");
+		System.out.println("2) Calcular en base a datos recolectados");
+		System.out.println("3) Informacion sobre el programa y datos");
+		System.out.println("0) Salir");
+		System.out.print("Opcion: ");
+		Option = input.nextInt();
+		
+		switch (Option) {
+		case 1:
+			
+			System.out.println("Ingrese datos para calcular la posicion del sol");
+			System.out.println("--------------------------------");
+			System.out.println("Ingrese la fecha que desea calcular");
+			System.out.print("Dia: ");
+			Day = input.nextInt();
+			System.out.print("Mes: ");
+			Month = input.nextInt();
+			System.out.print("Año: ");
+			Year = input.nextInt();
+			System.out.println("--------------------------------");
+			System.out.println("Ingrese hora (en UTC) - Tip: para convertir de hora uruguaya a UTC sumale 3 horas");
+			System.out.print("Hora: ");
+			UTCHour = input.nextInt();
+			System.out.print("Minutos: ");
+			UTCMinute = input.nextInt();
+			System.out.println("--------------------------------");
+			System.out.print("Ingrese datos de localizacion");
+			System.out.print("Ingrese latitud (+ al N)");
+			Latitude = input.nextDouble();
+			System.out.print("Ingrese longitud (+ al E)");
+			Longitude = input.nextDouble();
+			System.out.print("Ingrese zona horaria (+ al E)");
+			Timezone = input.nextInt();
+			
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 0:
+			break;
 
-		System.out.println("Ingrese la fecha que desea calcular");
-		System.out.print("Dia: ");
-		Day = input.nextInt();
-		System.out.print("Mes: ");
-		Month = input.nextInt();
-		System.out.print("Año: ");
-		Year = input.nextInt();
-		System.out.println("Ingrese hora");
-		System.out.print("Hora: ");
-		UTCHour = input.nextInt();
-		System.out.print("Minutos: ");
-		UTCMinute = input.nextInt();
-
+		}
+		
+		
+		
+		
+		
+		
 		JD = FormulaJD(Year, Month, Day, UTCHour, UTCMinute);
 
 		System.out.println(JD);
 
 		input.close();
+		
 	}
 
-	// los siguientes metodos son datos sobre la posicion del sol
+		
+	
+
+	// los siguientes metodos son formulas para datos de la posicion del sol
+	// en una fecha, hora y lugar determinado
 
 	public static double FormulaJD(double Y, double M, double D, double H, double MM) {
 		double JD;
