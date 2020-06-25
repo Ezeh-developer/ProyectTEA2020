@@ -5,8 +5,6 @@ import java.util.Scanner;
 public class CodigoPrincipal {
 	public static void main(String[] args) {
 		
-		System.out.println("Hola");
-		
 		Scanner input = new Scanner(System.in);
 
 		// Definicion de variables
@@ -20,6 +18,8 @@ public class CodigoPrincipal {
 		int Year = 0;
 		int UTCHour = 0;
 		int UTCMinute = 0;
+		//valores importados de la recoleccion de datos
+		double DataBaseTest;
 		// Valores calculados por metodos
 		double JD = 0;
 		double JC = 0;
@@ -47,7 +47,7 @@ public class CodigoPrincipal {
 		double SolarZenithAngle = 0;
 		double SolarElevationAngle = 0;
 		double ApproxAtmosphericRefraction = 0;
-		double SolarElevationCOrrectedForAtmRefraction = 0;
+		double SolarElevationCorrectedForAtmRefraction = 0;
 		double SolarAzimuthAngle = 0;
 		
 		System.out.println("Calculadora de posicion solar");
@@ -85,6 +85,7 @@ public class CodigoPrincipal {
 			System.out.print("Ingrese zona horaria (+ al E)");
 			Timezone = input.nextInt();
 			
+			
 			break;
 		case 2:
 			break;
@@ -95,15 +96,39 @@ public class CodigoPrincipal {
 
 		}
 		
-		
-		
-		
-		
+		// Asignacion de los valores a las variables usando los metodos y parametros correspondientes
 		
 		JD = FormulaJD(Year, Month, Day, UTCHour, UTCMinute);
-
+		JC = FormulaJC(JD);
+		GeomMeanLongSun = GeomMeanLongSun(JC);
+		GeomMeanAnomSun = GeomMeanAnomSun(JC);
+		EccentEarthOrbit = EccentEarthOrbit(JC);
+		SunEqOfCtr = SunEqOfCtr(GeomMeanAnomSun, JC);
+		SunTrueLong = SunTrueLong(GeomMeanLongSun, SunEqOfCtr);
+		SunTrueAnom = SunTrueAnom(GeomMeanAnomSun, SunEqOfCtr);
+		SunRadVector = SunRadVector(EccentEarthOrbit, SunTrueAnom);
+		SunAppLong = SunAppLong(SunTrueLong, JC);
+		MeanObliqEcliptic = MeanObliqEcliptic(JC);
+		ObliqCorr = ObliqCorr(MeanObliqEcliptic, JC);
+		SunRtAscen = SunRtAscen(SunAppLong, ObliqCorr);
+		SunDeclin = SunDeclin(ObliqCorr, SunAppLong);
+		VarY = VarY(ObliqCorr);
+		EqOfTime = EqOfTime(VarY, GeomMeanLongSun, EccentEarthOrbit, GeomMeanAnomSun);
+		HASunrise = HASunrise(Latitude, SunDeclin);
+		SolarNoon = SolarNoon(Longitude, EqOfTime, Timezone);
+		SunriseTime = SunriseTime(SolarNoon, HASunrise);
+		SunsetTime = SunsetTime(SolarNoon, HASunrise);
+		SunlightDuration = SunlightDuration(HASunrise);
+		TrueSolarTime = TrueSolarTime(UTCHour, UTCMinute, EqOfTime, Longitude, Timezone);
+		HourAngle = HourAngle(TrueSolarTime);
+		SolarZenithAngle = SolarZenithAngle(Latitude, SunDeclin, HourAngle);
+		SolarElevationAngle = SolarElevationAngle(SolarZenithAngle);
+		ApproxAtmosphericRefraction = ApproxAtmosphericRefraction(SolarElevationAngle);
+		SolarElevationCorrectedForAtmRefraction = SolarElevationCorrectedForAtmRefraction(SolarElevationAngle, ApproxAtmosphericRefraction);
+		SolarAzimuthAngle = SolarAzimuthAngle(Latitude, HourAngle, SolarZenithAngle, SunDeclin);
+		
 		System.out.println(JD);
-
+		
 		input.close();
 		
 	}
@@ -255,8 +280,7 @@ public class CodigoPrincipal {
 		return VarY;
 	}
 
-	public static double EqOfTime(double VarY, double GeomMeanLongSun, double EccentEarthOrbit,
-			double GeomMeanAnomSun) {
+	public static double EqOfTime(double VarY, double GeomMeanLongSun, double EccentEarthOrbit, double GeomMeanAnomSun) {
 		double EqOfTime;
 
 		EqOfTime = 4 * Math.toDegrees(VarY * Math.sin(2 * Math.toRadians(GeomMeanLongSun))
