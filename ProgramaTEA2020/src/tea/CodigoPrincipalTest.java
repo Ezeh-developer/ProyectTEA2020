@@ -2,10 +2,12 @@ package tea;
 
 import java.util.Scanner;
 
-public class CodigoPrincipal {
+public class CodigoPrincipalTest {
 	public static void main(String[] args) {
-		
+
 		Scanner input = new Scanner(System.in);
+
+		int tabla[][] = new int[31][27];
 
 		// Definicion de variables
 		int Option = 0;
@@ -18,7 +20,7 @@ public class CodigoPrincipal {
 		int Year = 0;
 		int UTCHour = 0;
 		int UTCMinute = 0;
-		//valores importados de la recoleccion de datos
+		// valores importados de la recoleccion de datos
 		double DataBaseTest;
 		// Valores calculados por metodos
 		double JD = 0;
@@ -49,7 +51,7 @@ public class CodigoPrincipal {
 		double ApproxAtmosphericRefraction = 0;
 		double SolarElevationCorrectedForAtmRefraction = 0;
 		double SolarAzimuthAngle = 0;
-		
+
 		System.out.println("Calculadora de posicion solar");
 		System.out.println("1) Ingresar datos");
 		System.out.println("2) Calcular en base a datos recolectados");
@@ -57,10 +59,10 @@ public class CodigoPrincipal {
 		System.out.println("0) Salir");
 		System.out.print("Opcion: ");
 		Option = input.nextInt();
-		
+
 		switch (Option) {
 		case 1:
-			
+
 			System.out.println("Ingrese datos para calcular la posicion del sol");
 			System.out.println("--------------------------------");
 			System.out.println("Ingrese la fecha que desea calcular");
@@ -84,8 +86,7 @@ public class CodigoPrincipal {
 			Longitude = input.nextDouble();
 			System.out.print("Ingrese zona horaria (+ al E)");
 			Timezone = input.nextInt();
-			
-			
+
 			break;
 		case 2:
 			break;
@@ -95,9 +96,79 @@ public class CodigoPrincipal {
 			break;
 
 		}
-		
-		// Asignacion de los valores a las variables usando los metodos y parametros correspondientes
-		
+
+		for (int row = 0; row < 31; row++) {
+
+			for (int col = 0; col < 27; col++) {
+				
+				switch(col) {
+				
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				case 5:
+					break;
+				case 6:
+					break;
+				case 7:
+					break;
+				case 8: 
+					break;
+				case 9:
+					break;
+				case 10:
+					break;
+				case 11:
+					break;
+				case 12:
+					break;
+				case 13:
+					break;
+				case 14:
+					break;
+				case 15:
+					break;
+				case 16:
+					break;
+				case 17:
+					break;
+				case 18:
+					break;
+				case 19:
+					break;
+				case 20:
+					break;
+				case 21:
+					break;
+				case 22:
+					break;
+				case 23:
+					break;
+				case 24:
+					break;
+				case 25:
+					break;
+				case 26:
+					break;
+				case 27:
+					break;
+				
+				}
+				
+			}
+
+		}
+
+		// Asignacion de los valores a las variables usando los metodos y parametros
+		// correspondientes
+
 		JD = FormulaJD(Year, Month, Day, UTCHour, UTCMinute);
 		JC = FormulaJC(JD);
 		GeomMeanLongSun = GeomMeanLongSun(JC);
@@ -124,19 +195,15 @@ public class CodigoPrincipal {
 		SolarZenithAngle = SolarZenithAngle(Latitude, SunDeclin, HourAngle);
 		SolarElevationAngle = SolarElevationAngle(SolarZenithAngle);
 		ApproxAtmosphericRefraction = ApproxAtmosphericRefraction(SolarElevationAngle);
-		SolarElevationCorrectedForAtmRefraction = SolarElevationCorrectedForAtmRefraction(SolarElevationAngle, ApproxAtmosphericRefraction);
+		SolarElevationCorrectedForAtmRefraction = SolarElevationCorrectedForAtmRefraction(SolarElevationAngle,
+				ApproxAtmosphericRefraction);
 		SolarAzimuthAngle = SolarAzimuthAngle(Latitude, HourAngle, SolarZenithAngle, SunDeclin);
-		
-		
-		
-		System.out.println(JD);
-		
-		input.close();
-		
-	}
 
-		
-	
+		System.out.println(JD);
+
+		input.close();
+
+	}
 
 	// los siguientes metodos son formulas para datos de la posicion del sol
 	// en una fecha, hora y lugar determinado
@@ -282,7 +349,8 @@ public class CodigoPrincipal {
 		return VarY;
 	}
 
-	public static double EqOfTime(double VarY, double GeomMeanLongSun, double EccentEarthOrbit, double GeomMeanAnomSun) {
+	public static double EqOfTime(double VarY, double GeomMeanLongSun, double EccentEarthOrbit,
+			double GeomMeanAnomSun) {
 		double EqOfTime;
 
 		EqOfTime = 4 * Math.toDegrees(VarY * Math.sin(2 * Math.toRadians(GeomMeanLongSun))
@@ -357,7 +425,7 @@ public class CodigoPrincipal {
 
 		return HourAngle;
 	}
-	
+
 	public static double SolarZenithAngle(double Latitude, double SunDeclin, double HourAngle) {
 		double SolarZenithAngle;
 
@@ -411,18 +479,20 @@ public class CodigoPrincipal {
 
 		return ApproxAtmosphericRefraction;
 	}
-	
-	public static double SolarElevationCorrectedForAtmRefraction(double SolarElevationAngle, double ApproxAtmosphericRefraction) {
+
+	public static double SolarElevationCorrectedForAtmRefraction(double SolarElevationAngle,
+			double ApproxAtmosphericRefraction) {
 		double SolarElevationCorrectedForAtmRefraction;
-		
-		SolarElevationCorrectedForAtmRefraction = SolarElevationAngle+ApproxAtmosphericRefraction;
-		
+
+		SolarElevationCorrectedForAtmRefraction = SolarElevationAngle + ApproxAtmosphericRefraction;
+
 		return SolarElevationCorrectedForAtmRefraction;
 	}
-	
-	public static double SolarAzimuthAngle(double Latitude, double HourAngle, double SolarZenithAngle, double SunDeclin) {
+
+	public static double SolarAzimuthAngle(double Latitude, double HourAngle, double SolarZenithAngle,
+			double SunDeclin) {
 		double SolarAzimuthAngle;
-		
+
 		if (HourAngle > 0) {
 			SolarAzimuthAngle = Math.toDegrees(Math
 					.acos(((Math.sin(Math.toRadians(Latitude)) * Math.cos(Math.toRadians(SolarZenithAngle)))
@@ -438,5 +508,14 @@ public class CodigoPrincipal {
 		}
 
 		return SolarAzimuthAngle;
+	}
+
+	// Metodos para calcular los datos de la posicion del sol en cada mes
+	
+	public static double MonthValuesJanuary() {
+		
+		
+		
+		return 0;
 	}
 }
